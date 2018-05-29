@@ -1,0 +1,47 @@
+#header {
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10%;
+
+  img {
+    width: 300px;
+    height: auto;
+  }
+}
+
+#intro {
+  width: 500px;
+  margin: 55px auto;
+
+  .intro-content {
+    p {
+      color: #2ed8aa;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .first {
+      font-size: 1.5em;
+    }
+
+    .second {
+      color: #fafafa;
+    }
+  }
+}
+
+#action {
+  width: 500px;
+  margin: 55px auto;
+
+  h2 {
+    color: #ee7cf5;
+  }
+
+  input {
+    width: 100%;
+    padding: 5px 10px;
+  }
+}
