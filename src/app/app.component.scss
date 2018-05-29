@@ -1,3 +1,6 @@
+#mc-embedded-subscribe {
+  margin-top: 10px;
+}
 #header {
   display: flex;
   flex-direction: row wrap;
@@ -8,12 +11,13 @@
   img {
     width: 300px;
     height: auto;
+    animation: spazz 7s steps(1) infinite;
   }
 }
 
 #intro {
   width: 500px;
-  margin: 55px auto;
+  margin: 7% auto 5%;
 
   .intro-content {
     p {
@@ -23,7 +27,9 @@
     }
 
     .first {
-      font-size: 1.5em;
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
 
     .second {
@@ -37,11 +43,80 @@
   margin: 55px auto;
 
   h2 {
-    color: #ee7cf5;
+    // color: #ee7cf5;
+    color: #2ed8aa;
+    margin-bottom: 15px;
+    font-weight: bold;
   }
 
   input {
-    width: 100%;
-    padding: 5px 10px;
+    &[type="email"] {
+      width: 75%;
+      padding: 5px 10px;
+    }
   }
 }
+
+$filters: (
+    saturate: (
+        units: '',
+        range: (
+            min: 1,
+            max: 10
+        ),
+        probability: 1/5
+    ),
+    hue-rotate: (
+        units: 'deg',
+        probability: 1,
+        range: (
+            min: 0,
+            max: 360
+        ),
+    ),
+    invert: (
+        units: '',
+        probability: 1/30,
+        range: (
+            min: 1,
+            max: 1
+        ),
+    ),
+    contrast: (
+        units: '',
+        probability: 1/10,
+        range: (
+            min: 1,
+            max: 10
+        ),
+    ),
+    brightness: (
+        units: '%',
+        probability: 1/20,
+        range: (
+            min: 25,
+            max: 75
+        ),
+    )
+);
+
+@keyframes spazz {
+    @for $i from 0 through 100 {
+        @if(random(100) < 66.6) {
+            #{$i}% {
+                $filter_css_value: '';
+                @each $filter, $filter_props in $filters {
+                    @if((random(100) / 100) < map-get($filter_props, probability)) {
+                        $range: map-get($filter_props, range);
+                        $min: map-get($range, min);
+                        $max: map-get($range, max);
+                        $filter_css_value: $filter_css_value + ' #{$filter}(#{random(100) / 100 * ($max - $min) + $min}#{map-get($filter_props, units)})';
+                    }
+                }
+                filter: unquote($filter_css_value);
+                background-color: hsl(random(360), 100%, 70%);
+                transform: translate(#{random(30) - 15}px, #{random(30) - 15}px) scale(random(20) / 100 + 1.05);
+            }
+        }
+    }
+};
